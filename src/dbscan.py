@@ -1,4 +1,5 @@
 from cProfile import label
+from json import load
 from sklearn.datasets import *
 import matplotlib.pyplot as plt
 import numpy as np
@@ -126,7 +127,17 @@ def convertIndexToData(data, clusters):
 
 def mainDBSCAN():
     # Ask for user input for epsilon and minimumPoints
-    data = load_iris()
+    print("DBSCAN Unsupervised Learning Algorithm")
+    print("Pick your choice for the dataset!")
+    print("1. Iris Dataset")
+    print("2. Wine Dataset")
+    choice = int(input("Enter your choice: "))
+    if choice == 1:
+        data = load_iris()
+        data_name = "Iris Dataset"
+    elif choice == 2:
+        data = load_wine()
+        data_name = "Wine Dataset"
     epsilon = float(input("Enter epsilon: "))
     minimumPoints = int(input("Enter minimumPoints: "))
     clusters = generateClusters(pd.DataFrame(
@@ -149,8 +160,8 @@ def mainDBSCAN():
         plt.scatter(cluster[x_axis], cluster[y_axis],
                     label="Cluster {}".format(cluster_idx))
         cluster_idx += 1
-    plt.title("DBSCAN results for epsilon = {}, minimumPoints = {}".format(
-        epsilon, minimumPoints))
+    plt.title("DBSCAN results for dataset {} with epsilon = {}, minimumPoints = {}".format(
+        data_name, epsilon, minimumPoints))
     plt.legend()
     plt.show()
 
